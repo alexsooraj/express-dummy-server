@@ -7,10 +7,53 @@ const port = 8080;
 app.use(cors());
 app.use(bodyParser.json());
 
+const data = [
+    {
+        country: 'US',
+        count: 12840951
+    },
+    {
+        country: 'India',
+        count: 9222216
+    },
+    {
+        country: 'Brazil',
+        count: 6118708
+    },
+    {
+        country: 'France',
+        count: 2154097
+    },
+    {
+        country: 'Russia',
+        count: 2120836
+    },
+    {
+        country: 'Spain',
+        count: 1594844
+    },
+    {
+        country: 'UK',
+        count: 1538764
+    },
+    {
+        country: 'Italy',
+        count: 1455022
+    }
+];
+
+app.get('/data', (req, res) => {
+    res.send({ data, date: new Date('11-26-2020').getTime() });
+});
+
+app.get('/data/:country', (req, res) => {
+    res.send(data.find(item => item.country.toLocaleLowerCase() === req.params.country.toLocaleLowerCase()));
+});
+
 app.post('/login', (req, res) => {
     if (req.body.userId === 'aaa' && req.body.password === 'aaa') {
         res.send({
-            tocken: 'test1233sewefwefewfe',
+            token: 'test1233sewefwefewfe',
             userId: 'aaa',
             userName: 'Alex'
         });
