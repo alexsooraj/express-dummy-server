@@ -47,7 +47,9 @@ app.get('/data', (req, res) => {
 });
 
 app.get('/data/:country', (req, res) => {
-    res.send(data.find(item => item.country.toLocaleLowerCase() === req.params.country.toLocaleLowerCase()));
+    setTimeout(() => {
+        res.send(data.find(item => item.country.toLocaleLowerCase() === req.params.country.toLocaleLowerCase()));
+    }, 1000);
 });
 
 app.post('/login', (req, res) => {
