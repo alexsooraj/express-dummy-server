@@ -59,6 +59,10 @@ app.post('/todos', (req, res) => {
     res.send({ result: 'Success' });
 });
 
+app.get('/todos', (req, res) => {
+    res.send(db.get('todos').value());
+});
+
 app.get('/data', (req, res) => {
     res.send({ data, date: new Date('11-26-2020').getTime() });
 });
