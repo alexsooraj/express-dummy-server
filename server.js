@@ -1,11 +1,20 @@
 const express = require('express');
 var cors = require('cors');
 const bodyParser = require('body-parser');
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+
+const adapter = new FileSync('db.json');
+const db = low(adapter);
 
 const app = express();
 const port = 8080;
 app.use(cors());
 app.use(bodyParser.json());
+
+db.defaults({
+    todos: []
+}).write();
 
 const data = [
     {
@@ -41,6 +50,14 @@ const data = [
         count: 1455022
     }
 ];
+
+app.post('/todos', (req, res) => {
+    db.get('todos').push({
+        title: req.body.title,
+        description: req.body.description
+    }).write();
+    res.send({ result: 'Success' });
+});
 
 app.get('/data', (req, res) => {
     res.send({ data, date: new Date('11-26-2020').getTime() });
