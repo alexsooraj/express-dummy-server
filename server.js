@@ -16,61 +16,40 @@ db.defaults({
     todos: []
 }).write();
 
-const data = [
-    {
-        country: 'US',
-        count: 12840951
-    },
-    {
-        country: 'India',
-        count: 9222216
-    },
-    {
-        country: 'Brazil',
-        count: 6118708
-    },
-    {
-        country: 'France',
-        count: 2154097
-    },
-    {
-        country: 'Russia',
-        count: 2120836
-    },
-    {
-        country: 'Spain',
-        count: 1594844
-    },
-    {
-        country: 'UK',
-        count: 1538764
-    },
-    {
-        country: 'Italy',
-        count: 1455022
-    }
-];
+function generateGuid() {
+    var S4 = function () {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+}
 
 app.post('/todos', (req, res) => {
     db.get('todos').push({
+        id: generateGuid(),
         title: req.body.title,
-        description: req.body.description
+        description: req.body.description,
+        category: req.body.category
     }).write();
     res.send({ result: 'Success' });
 });
 
+app.put('/todos', (req, res) => {
+    db.get('todos').find({ id: req.body.id }).assign({ title: req.body.title, description: req.body.description, category: req.body.category }).write();
+    res.send({ result: 'Success' });
+});
+
+app.delete('/todos', (req, res) => {
+    console.log('req.body.id', req.body.id);
+    db.get('todos').remove({ id: req.body.id }).write();
+    res.send({ result: 'Success' });
+});
+
 app.get('/todos', (req, res) => {
-    res.send(db.get('todos').value());
-});
-
-app.get('/data', (req, res) => {
-    res.send({ data, date: new Date('11-26-2020').getTime() });
-});
-
-app.get('/data/:country', (req, res) => {
-    setTimeout(() => {
-        res.send(data.find(item => item.country.toLocaleLowerCase() === req.params.country.toLocaleLowerCase()));
-    }, 1000);
+    if (req.query.category === undefined) {
+        res.send(db.get('todos').value());
+    } else {
+        res.send(db.get('todos').find({ category: req.query.category }).value());
+    }
 });
 
 app.post('/login', (req, res) => {
