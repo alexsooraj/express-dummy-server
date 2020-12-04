@@ -35,6 +35,24 @@
       "title": "Go to bank",
       "description": "Go to bank and deposit money",
       "category": "FINANCIAL"
+    },
+    {
+      "id": "9d45485b-1abe-6143-0858-9fb6f7a704be",
+      "title": "Backup data",
+      "description": "Backup data from HDD",
+      "category": "OFFICIAL"
+    },
+    {
+      "id": "bf645af3-603f-362e-1e7e-3802ec9268d2",
+      "title": "Go to hospital",
+      "description": "Go to ABC hospital today",
+      "category": "HEALTH"
+    },
+    {
+      "id": "a548e14c-2e6e-aeca-b763-fd8b9e3b7830",
+      "title": "Close service request",
+      "description": "Close service request 1234",
+      "category": "OFFICIAL"
     }
   ]
 }
