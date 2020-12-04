@@ -39,8 +39,8 @@ app.put('/todos', (req, res) => {
 });
 
 app.delete('/todos', (req, res) => {
-    console.log('req.body.id', req.body.id);
-    db.get('todos').remove({ id: req.body.id }).write();
+    console.log('req.body.id', req.query.id);
+    db.get('todos').remove({ id: req.query.id }).write();
     res.send({ result: 'Success' });
 });
 
@@ -48,7 +48,7 @@ app.get('/todos', (req, res) => {
     if (req.query.category === undefined) {
         res.send(db.get('todos').value());
     } else {
-        res.send(db.get('todos').find({ category: req.query.category }).value());
+        res.send(db.get('todos').filter({ category: req.query.category }).value());
     }
 });
 
